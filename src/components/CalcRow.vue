@@ -1,6 +1,6 @@
 <template>
     <div>
-     <calc-button v-for="element in this.calc_row.views" :key="element.index" :button_text= "element"></calc-button>   
+     <calc-button v-on="$listeners" v-for="element in this.calc_row.views" :key="element.index" :button_text= "element"></calc-button>   
     </div>
 </template>
 
