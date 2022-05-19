@@ -1,6 +1,6 @@
 <template>
   <div>
-      <button> {{button_text}}</button>
+      <button> {{button_text.properties[0].value}}</button>
   </div>
 </template>
 

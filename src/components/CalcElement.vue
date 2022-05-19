@@ -7,11 +7,9 @@
 </template>
 
 <script>
-import CalcButton from './CalcButton.vue'
-import CalcGrid from './CalcGrid.vue'
-import CalcText from './CalcText.vue'
+
 export default {
-  components: { CalcGrid, CalcText, CalcButton },
+  
     props:[
         'block_element'
     ],

@@ -1,13 +1,13 @@
 <template>
     <div>
-     <calc-element v-for="element in calc_row" :key="element.id" calc_element= element></calc-element>   
+     <calc-element v-for="element in calc_row.views" :key="element.id" calc_element= element></calc-element>   
     </div>
 </template>
 
 <script>
 
 export default {
-  components: { CalcElement },
+  
     props:[
         'calc_row'
     ],

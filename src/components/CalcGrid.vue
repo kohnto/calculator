@@ -1,6 +1,6 @@
 <template>
   <div>
-    <calc-row v-for="calc_row in calc_grid" :key="calc_row.id" calc_row= calc_row></calc-row>
+    <calc-row v-for="calc_row in calc_grid.views" :key="calc_row.id" calc_row= calc_row></calc-row>
   </div>
 </template>
 
