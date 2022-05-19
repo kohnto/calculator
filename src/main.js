@@ -1,22 +1,24 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
-import store from './store';
-import ButtonBlock from './components/ButtonBlock';
-import GridBlock from './components/GridBlock'
 
-import RowBlock from './components/RowBlock'
-import TextBlock from './components/TextBlock'
+import CalcButton from './components/CalcButton';
+import CalcGrid from './components/CalcGrid'
+
+import CalcRow from './components/CalcRow'
+import CalcText from './components/CalcText'
+import CalcElement from './components/CalcElement'
 
 
 Vue.config.productionTip = false
 
 var vm = new Vue({
-  router,
-  store,
   render: h => h(App)
 }).$mount('#app')
 
-Vue.component('button-block',ButtonBlock);
+Vue.component('calc-button',CalcButton);
+Vue.component('calc-grid',CalcGrid);
+Vue.component('calc-row',CalcRow);
+Vue.component('calc-text',CalcText);
+Vue.component('calc-element',CalcElement);
 
 

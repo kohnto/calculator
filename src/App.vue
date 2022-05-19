@@ -1,28 +1,19 @@
 <template>
   <div>
-   <button-block button_text="0"></button-block>
+    <calc-row></calc-row>
+   <!-- <button-block button_text="0"></button-block>
+   <text-block text="asd"></text-block> -->
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+<script>
+export default {
+
 }
+</script>
 
-nav {
-  padding: 30px;
+<style>
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>
+

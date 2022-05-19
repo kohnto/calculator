@@ -1,8 +1,6 @@
 <template>
   <div>
-      <v-btn> {{button_text}}</v-btn>
-
-      
+      <button> {{button_text}}</button>
   </div>
 </template>
 
