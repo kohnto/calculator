@@ -1,6 +1,6 @@
 <template>
   <div>
-      <p>{{text_element.properties[0].value}}</p>
+      <p>{{this.text_element.views[0].properties[0].value}}</p>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
     ],
   data() {
     return {
-        text_element:this.text_element
+        
     }
     }
 }

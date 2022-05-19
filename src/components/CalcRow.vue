@@ -1,19 +1,20 @@
 <template>
     <div>
-     <calc-element v-for="element in calc_row.views" :key="element.id" calc_element= element></calc-element>   
+     <calc-button v-for="element in this.calc_row.views" :key="element.index" :button_text= "element"></calc-button>   
     </div>
 </template>
 
 <script>
+import CalcButton from './CalcButton.vue'
 
 export default {
+  components: { CalcButton },
   
     props:[
         'calc_row'
     ],
   data() {
     return {
-        calc_row:this.calc_row
     }
     }
 }

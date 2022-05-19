@@ -1,8 +1,7 @@
 <template>
   <div>
-      <calc-grid v-if="calc_element.id == 'calc_row_grid_block'" calc_grid=calc_element></calc-grid>
-      <calc-text v-else-if="calc_element.id == 'calc_title' || calc_element.id == 'calc_amount'" text_element=calc_element></calc-text>
-      <calc-button v-else button_text=calc_element></calc-button>
+      <!-- <calc-text v-if="this.calc_element.id == 'calc_title' || this.calc_element.id == 'calc_amount'" :text_element="this.calc_element"></calc-text> -->
+      <calc-button  :button_text="this.calc_element"></calc-button>
   </div>
 </template>
 
@@ -11,11 +10,10 @@
 export default {
   
     props:[
-        'block_element'
+        'calc_element'
     ],
     data() {
         return {
-            calc_element:this.calc_element
         }
     }
 }

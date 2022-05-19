@@ -1,6 +1,6 @@
 <template>
   <div>
-      <button> {{button_text.properties[0].value}}</button>
+      <button> {{this.button_text.properties[0].value}}</button>
   </div>
 </template>
 
@@ -11,8 +11,10 @@ export default {
     ],
     data() {
         return {
-            button_text:this.button_text
         }
+    },
+    methods:{
+        
     }
 }
 </script>
