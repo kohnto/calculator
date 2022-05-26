@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     calcTitle: '',
     showingOnScreen: 0,
-    calcGrid: {}
+    calcGrid: {},
+    lastButtonPressed:{}
   },
   getters: {//use to get states (we can do with the state whatever we want)
     getCalcTitle (state){
@@ -29,9 +30,17 @@ export default new Vuex.Store({
     },
     setCalcGrid (state, payload){
       state.calcGrid = payload.calcGrid;
+    },
+    setLastButtonPressed(state, payload){
+      state.lastButtonPressed = payload.lastButtonPressed;
     }
   },
   actions: {//allow async functions, need to use with dispatch
+    lastButtonPressed(context,payload){
+      setTimeout(() => {
+        context.commit('setLastButtonPressed',payload);
+      },2000);
+    }
   },
   modules: {
   }

@@ -21,24 +21,13 @@ import buildingBlocks from '../../buildingBlocks';
 import CalcGridRow from './CalcRow.vue';
 import CalculatorScreen from './CalculatorScreen.vue';
 import CalculatorTitle from './CalculatorTitle.vue';
-import {mapMutations, mapGetters } from 'vuex';
+import {mapMutations, mapGetters, mapActions } from 'vuex';
 export default {
   name: 'calculator',
   components: {
     CalcGridRow,
     CalculatorTitle,
     CalculatorScreen
-  },
-  data() {
-    return {
-        showingOnCalcScreen: 5,
-        isStratedNewNumber: true,
-        lastNumber: 0,
-        lastOperation: '',
-        is_the_first_time: true,
-        numToDivideBy: 10,
-        theNumberIsDouble:false
-    }   
   },
   computed: {
     ...mapGetters['getShowingOnScreen',{calcGrid: 'getCalcGrid'}],
@@ -67,7 +56,9 @@ export default {
       'setShowingOnScreen',
       'setCalcGrid'
     ]),
+    ...mapActions(['lastButtonPressed']),
     changeCalcScreen(calc_button_element) {
+      this.lastButtonPressed({lastButtonPressed: calc_button_element})
       this.setShowingOnScreen({showingOnScreen: changeCalcScreen(calc_button_element)})
     }
   },
