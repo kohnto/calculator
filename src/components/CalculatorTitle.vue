@@ -1,19 +1,23 @@
 <template>
-    <div>
-        <p>{{this.title}}</p>
-    </div>
+    <div class="title">{{getCalcTitle}}</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
     export default {
         name: 'CalculatorTitle',
-        props: [
-            'title'
-        ],
+        computed: {
+            ...mapGetters({calcTitle: 'getCalcTitle' }),
+            getCalcTitle() {
+                return this.calcTitle;
+            }
+        }
     }
-    
 </script>
 
 <style>
-
+    div.title {
+        color:#ffffff;
+        font-size: 25px
+    }
 </style>

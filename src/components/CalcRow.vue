@@ -1,14 +1,12 @@
 <template>
-    <div>
-     <!-- <calc-button v-on="$listeners" v-for="element in this.calc_row.views" :key="element.index" :button_text= "element"></calc-button>    -->
-      <button
-        v-for="calc_button_element in this.calcRow.views"
-        :key="calc_button_element.index"
-        @click="buttonPressedHandler(calc_button_element)"
-      >
-        {{calc_button_element.properties.find(property => property.name == 'text').value}}
-      </button>
-    </div>
+  <div class="buttonsRow">
+    <button
+      v-for="view in this.calcRow.views"
+      :key="view.index"
+      @click="$emit('button-press',view)">
+      {{ view.properties.find(property => property.name == 'text').value }}
+    </button>
+  </div>
 </template>
 
 <script>
@@ -16,15 +14,21 @@ export default {
   name: 'CalcGridRow',
   props:[
     'calcRow'
-  ],
-  methods: {
-    buttonPressedHandler(calc_button_element){
-      this.$emit('button-press',calc_button_element);
-    }
-  }
+  ]
 }
 </script>
 
 <style>
+  button {
+    padding: 20px;
+    border-radius: 7px;
+    width: 100%;
+    font-size:18px;
+    background-color: #ffffff;
+    color:#1d3557
+  }
+  div.buttonsRow {
+    display: flex;
+  }
 
 </style>

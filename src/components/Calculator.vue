@@ -1,160 +1,100 @@
 <template>
-  <div>
-    <CalculatorTitle :title="this.calcTitle"/>
-    <CalculatorScreen
-      :showingOnScreen="this.showingOnCalcScreen"/>
-    <CalcGridRow 
-      v-for="row in this.calcGrid.views" 
-      :key="row.index"
-      :calcRow="row" 
-      @button-press="changeCalcScreen"/>
+  <div class= "mainCalculator">
+    <div>
+      <CalculatorTitle/>
+      <CalculatorScreen/>
+      <div class = "calculatorGrid">
+        <CalcGridRow 
+          v-for="row in this.getCalcGrid.views" 
+          :key="row.index"
+          :calcRow="row" 
+          @button-press="changeCalcScreen"/>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script>
-
+import {findId, findByProperty,changeCalcScreen } from '@/utils/calculatorFunctions';
 import buildingBlocks from '../../buildingBlocks';
 import CalcGridRow from './CalcRow.vue';
 import CalculatorScreen from './CalculatorScreen.vue';
 import CalculatorTitle from './CalculatorTitle.vue';
+import {mapMutations, mapGetters } from 'vuex';
 export default {
-    components: {
+  name: 'calculator',
+  components: {
     CalcGridRow,
     CalculatorTitle,
     CalculatorScreen
-},
-    name: 'calculator',
-    
-    data() {
-      return {
-        showingOnCalcScreen: 0,
+  },
+  data() {
+    return {
+        showingOnCalcScreen: 5,
         isStratedNewNumber: true,
         lastNumber: 0,
         lastOperation: '',
         is_the_first_time: true,
         numToDivideBy: 10,
         theNumberIsDouble:false
-      }   
+    }   
+  },
+  computed: {
+    ...mapGetters['getShowingOnScreen',{calcGrid: 'getCalcGrid'}],
+    calcTitleObj () {
+      return findId(buildingBlocks, 'calc_title');
     },
-    computed: {
-      calcTitleObj () {
-        return this.findId(buildingBlocks, 'calc_title')
-      },
-      calcTitle () {
-        return this.calcTitleObj.properties.find(property => property.name == 'text').value;
-      },
-      calcAmountObj () {
-        return this.findId(buildingBlocks, 'calc_amount')
-      },
-      calcAmount () {
-        return this.calcAmountObj.properties.find(property => property.name == 'text').value;
-      },
-      calcGrid () {
-        return this.findId(buildingBlocks, 'calc_row_grid_block')
-      }
+    calcTitle (){
+      return findByProperty(this.calcTitleObj, 'text').value;
     },
-    methods:{
-      changeCalcScreen(calc_button_element){
-        let numberAction = calc_button_element.actions.find(action => action.type == 'number');
-        let operatorAction = calc_button_element.actions.find(action => action.type == 'action');
-        let charAction = calc_button_element.actions.find(action => action.type == 'char');
-        let actionValue = numberAction !== undefined ? numberAction.value : ( operatorAction !== undefined ? operatorAction.value : charAction.value);
-        if(numberAction !== undefined){//number
-          
-          if(this.theNumberIsDouble){ //double
-            if(this.isStratedNewNumber){
-              this.showingOnCalcScreen = actionValue / this.numToDivideBy;
-              this.isStratedNewNumber = false;
-            }
-            else{
-              this.showingOnCalcScreen =  this.showingOnCalcScreen + (actionValue / this.numToDivideBy);
-            }
-            this.numToDivideBy *= 10;
-          }
-          else{ //int
-            if(this.isStratedNewNumber){
-              this.showingOnCalcScreen = actionValue;
-              this.isStratedNewNumber = false;
-            }
-            else{
-              this.showingOnCalcScreen =  this.showingOnCalcScreen * 10 + actionValue;
-            }
-          }
-        }
-        else if(charAction != undefined){//char '.' 
-          if(this.theNumberIsDouble){
-            alert("wrong operation");
-          }
-          else{
-            this.theNumberIsDouble = true
-          }
-        }
-        else{//operator
-          if(actionValue == 'reset'){//reset
-            this.showingOnCalcScreen = 0;
-            this.lastOperation = '';
-            this.is_the_first_time = true;
-            this.lastNumber = 0;
-          }
-          else if(actionValue == 'del'){//del
-            this.showingOnCalcScreen = 0;
-          }
-          // else if(actionValue == 'sum'){//=
-          //   this.showingOnCalcScreen = 
-          // }
-          else{
-            if(!this.isStratedNewNumber){
-              switch(this.lastOperation){
-                //+
-                case "plus":
-                  this.showingOnCalcScreen = this.lastNumber + this.showingOnCalcScreen;
-                  break;
-                //-
-                case "sub":
-                  this.showingOnCalcScreen = this.lastNumber - this.showingOnCalcScreen;
-                  break;
-                //*
-                case "mul":
-                  this.showingOnCalcScreen = this.lastNumber * this.showingOnCalcScreen;
-                  break;
-                // /
-                case "div":
-                  this.showingOnCalcScreen = this.lastNumber / this.showingOnCalcScreen;
-                  break;
-              }
-            }
-            
-            this.lastOperation = actionValue === 'sum' ? this.lastOperation : actionValue;
-            this.lastNumber = actionValue === 'sum' ? this.lastNumber : this.showingOnCalcScreen;
-          }
-          this.numToDivideBy = 10;
-          this.theNumberIsDouble = false;
-          this.isStratedNewNumber = actionValue === 'sum' ? false : true;
-        }
-        
-      },
-      findId(buildingBlock, id){
-        // generator
-        let views = buildingBlock.views;
-        if (views.length === 0) return null;
-        for(let view of views){
-          if (view.id === id) {
-            return view;
-          }
-          let output = this.findId(view, id);
-          if (output != null){
-            return output;
-          }
-        }
-        return null
-      },
+    calcAmountObj () {
+      return findId(buildingBlocks, 'calc_amount');
+    },
+    calcAmount () {
+      return findByProperty(this.calcAmountObj,'text').value;
+    },
+    calcGrid () {
+      return findId(buildingBlocks, 'calc_row_grid_block');
+    },
+    getCalcGrid (){
+      return this.calcGrid;
+    },
+  },
+  methods:{
+    ...mapMutations([
+      'setCalcTitle',
+      'setShowingOnScreen',
+      'setCalcGrid'
+    ]),
+    changeCalcScreen(calc_button_element) {
+      this.setShowingOnScreen({showingOnScreen: changeCalcScreen(calc_button_element)})
     }
+  },
+  beforeMount() {
+    this.setCalcTitle({title:this.calcTitle});
+
+    this.setShowingOnScreen({showingOnScreen: this.calcAmount});
+
+    this.setCalcGrid({calcGrid: this.calcGrid});
+  }
 }
 
 </script>
 
 <style>
-
+.mainCalculator {
+  background-color:#457b9d;
+  width: 600px;
+  margin-left: 550px;
+  margin-top: 50px;
+  border-radius: 7px;
+}
+.calculatorGrid {
+  background-color:#1d3557;
+  padding: 5px;
+  margin: 15px 0px;
+  border-radius: 5px;
+}
 </style>
 
